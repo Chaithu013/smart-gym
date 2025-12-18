@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Fitness Coach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-page: #02040a;
+        --bg-main: #050509;
+        --bg-card: #050816;
+        --bg-soft: #0b1020;
+        --accent: #ff1d25;
+        --accent-strong: #ff313a;
+        --accent-soft: rgba(255, 29, 37, 0.18);
+        --text-main: #f9fafb;
+        --text-muted: #9ca3af;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, #111827 0, transparent 55%),
+          radial-gradient(circle at bottom right, #020617 0, transparent 60%),
+          radial-gradient(circle at top, #111827 0, #02040a 55%);
+        color: var(--text-main);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* TOP BAR */
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 40px;
+        background: rgba(0, 0, 0, 0.96);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+        backdrop-filter: blur(16px);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+
+      .logo-badge {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: radial-gradient(circle at top left, #ffffff, var(--accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        color: #020617;
+        box-shadow: 0 0 18px rgba(239, 68, 68, 0.7);
+      }
+
+      .top-bar nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .top-bar nav a {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        position: relative;
+      }
+
+      .top-bar nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+        transition: width 0.18s ease;
+      }
+
+      .top-bar nav a:hover {
+        color: var(--text-main);
+      }
+
+      .top-bar nav a:hover::after {
+        width: 100%;
+      }
+
+      .page {
+        max-width: 1140px;
+        margin: 32px auto 48px;
+        padding: 0 20px;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 6px;
+      }
+
+      .section-sub {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 18px;
+      }
+
+      /* HERO */
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+        gap: 32px;
+        align-items: stretch;
+      }
+
+      .hero-left {
+        border-radius: 26px;
+        overflow: hidden;
+        position: relative;
+        min-height: 430px;
+        background-image: url("https://images.pexels.com/photos/2261485/pexels-photo-2261485.jpeg?auto=compress&cs=tinysrgb&w=1600");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 135%;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top left, rgba(239, 68, 68, 0.35), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.95), #000000 75%);
+        padding: 28px 26px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .hero-heading {
+        max-width: 430px;
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        color: #9ca3af;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .hero-heading h1 {
+        font-size: 2.8rem;
+        line-height: 1.02;
+        margin-bottom: 10px;
+      }
+
+      .hero-heading p {
+        font-size: 0.9rem;
+        color: #d1d5db;
+      }
+
+      .hero-inline-image {
+        margin-top: 18px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .hero-inline-image img {
+        width: 230px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 18px;
+        border: 1px solid rgba(15, 23, 42, 0.9);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.85);
+        filter: brightness(0.9) contrast(1.05);
+      }
+
+      .hero-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 26px;
+      }
+
+      .tag-pill {
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.92);
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* FORM CARD */
+
+      .hero-right {
+        background: radial-gradient(circle at top, #020617, #02040a 70%);
+        border-radius: 26px;
+        padding: 22px 20px 22px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-right::before {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        background: radial-gradient(circle, rgba(239, 68, 68, 0.25), transparent);
+        right: -60px;
+        top: -60px;
+        opacity: 0.8;
+      }
+
+      .hero-right h2 {
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+      }
+
+      .hero-right p {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+
+      .start-form {
+        position: relative;
+        z-index: 1;
+      }
+
+      .start-form .form-row {
+        margin-bottom: 11px;
+      }
+
+      .start-form label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+      }
+
+      .start-form input[type="number"],
+      .start-form input[type="email"] {
+        width: 100%;
+        padding: 8px 11px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--text-main);
+        font-size: 0.9rem;
+        outline: none;
+      }
+
+      .start-form input:focus {
+        border-color: var(--accent-strong);
+        box-shadow: 0 0 0 1px var(--accent-soft);
+      }
+
+      .level-options {
+        display: flex;
+        gap: 8px;
+      }
+
+      .level-pill {
+        flex: 1;
+        border-radius: 999px;
+        padding: 7px 10px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        font-size: 0.78rem;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        background: rgba(15, 23, 42, 0.95);
+      }
+
+      .level-pill input {
+        accent-color: var(--accent);
+      }
+
+      #startButton {
+        margin-top: 12px;
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: none;
+        font-size: 0.95rem;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s
+          ease;
+      }
+
+      #startButton:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      #startButton:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 32px rgba(248, 113, 113, 0.7);
+      }
+
+      .current-plan-summary {
+        margin-top: 14px;
+        padding: 10px 11px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.96),
+          rgba(15, 23, 42, 0.9)
+        );
+        font-size: 0.8rem;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        position: relative;
+        z-index: 1;
+      }
+
+      .badge-small {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+        color: var(--text-muted);
+      }
+
+      /* EXPLORE OUR PROGRAM */
+
+      .program-section {
+        margin-top: 34px;
+        border-radius: 22px;
+        padding: 20px 18px 20px;
+        background: radial-gradient(circle at top, #020617, #02040a 75%);
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9);
+        transition: box-shadow 0.25s ease, background 0.25s ease, border-color
+          0.25s ease;
+      }
+
+      .program-section.program-focus {
+        border-color: var(--accent-soft);
+        box-shadow: 0 0 0 1px var(--accent-soft),
+          0 18px 55px rgba(0, 0, 0, 0.95);
+        background: radial-gradient(
+          circle at top,
+          rgba(248, 113, 113, 0.12),
+          #02040a 70%
+        );
+      }
+
+      .program-row-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 16px;
+      }
+
+      .program-row-title h2 {
+        font-size: 1.35rem;
+      }
+
+      .program-row-title span {
+        font-size: 0.74rem;
+        color: var(--accent);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .program-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .program-card {
+        background: var(--bg-card);
+        border-radius: 16px;
+        padding: 13px 13px 15px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease,
+          background 0.16s ease, border-color 0.16s ease;
+      }
+
+      .program-card.highlight {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        border-color: transparent;
+        color: #111827;
+      }
+
+      .program-card.highlight p {
+        color: #111827;
+      }
+
+      .program-card.program-active {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent-soft),
+          0 14px 34px rgba(0, 0, 0, 0.8);
+      }
+
+      .program-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75);
+      }
+
+      .program-card h3 {
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+      }
+
+      .program-card p {
+        color: var(--text-muted);
+        font-size: 0.78rem;
+      }
+
+      .program-step {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin-bottom: 4px;
+        color: var(--text-muted);
+      }
+
+      .program-link {
+        display: inline-block;
+        margin-top: 8px;
+        font-size: 0.75rem;
+        color: var(--accent-strong);
+        text-decoration: underline;
+      }
+
+      /* SHARED CARDS / FORMS */
+
+      .card {
+        background: linear-gradient(145deg, #020617, #02040a);
+        border-radius: 18px;
+        padding: 16px 16px 18px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85);
+      }
+
+      .card h2 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
+
+      .card h3 {
+        font-size: 0.9rem;
+        margin-top: 8px;
+        margin-bottom: 4px;
+      }
+
+      .plan-list {
+        list-style: none;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+      }
+
+      .plan-list li {
+        margin-bottom: 3px;
+      }
+
+      .note {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .log-form .form-row {
+        margin-bottom: 8px;
+      }
+
+      .log-form label {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .log-form input {
+        width: 100%;
+        padding: 7px 9px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        background: #020617;
+        color: var(--text-main);
+        font-size: 0.85rem;
+      }
+
+      .log-form input:focus {
+        border-color: var(--accent-strong);
+        box-shadow: 0 0 0 1px var(--accent-soft);
+      }
+
+      .log-form button {
+        margin-top: 4px;
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .challenge-checkboxes {
+        max-height: 110px;
+        overflow-y: auto;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        padding: 6px 8px;
+      }
+
+      .challenge-checkboxes label {
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 3px;
+      }
+
+      /* DASHBOARD LAYOUT */
+
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+        gap: 18px;
+        align-items: flex-start;
+      }
+
+      .dashboard-main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .dashboard-side {
+        display: grid;
+        grid-template-rows: auto auto;
+        gap: 18px;
+      }
+
+      /* AI CHAT */
+
+      .ai-card {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chat-box {
+        flex: 1;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        padding: 8px;
+        margin-bottom: 8px;
+        max-height: 220px;
+        overflow-y: auto;
+        background: #020617;
+      }
+
+      .message {
+        padding: 6px 9px;
+        border-radius: 10px;
+        font-size: 0.83rem;
+        margin-bottom: 6px;
+      }
+
+      .message.bot {
+        background: rgba(59, 130, 246, 0.22);
+      }
+
+      .message.user {
+        background: rgba(34, 197, 94, 0.22);
+        text-align: right;
+      }
+
+      .chat-input-row {
+        display: flex;
+        gap: 6px;
+      }
+
+      .chat-input-row input {
+        flex: 1;
+        padding: 8px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        background: #020617;
+        color: #e5e7eb;
+        font-size: 0.85rem;
+      }
+
+      .chat-input-row button {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #020617;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.85rem;
+      }
+
+      /* STARTED PLANS TABLE */
+
+      .plans-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+        margin-top: 16px;
+      }
+
+      .plans-table th,
+      .plans-table td {
+        border: 1px solid rgba(55, 65, 81, 0.7);
+        padding: 6px 8px;
+        text-align: center;
+      }
+
+      .plans-table th {
+        background: #020617;
+      }
+
+      .delete-btn {
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: none;
+        background: rgba(239, 68, 68, 0.15);
+        color: #f97373;
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+
+      .delete-btn:hover {
+        background: #ef4444;
+        color: #020617;
+      }
+
+      /* PROGRESS SUMMARY TABLE */
+
+      .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 6px;
+        font-size: 0.85rem;
+      }
+
+      .summary-table th,
+      .summary-table td {
+        border: 1px solid rgba(55, 65, 81, 0.7);
+        padding: 4px 6px;
+        text-align: center;
+      }
+
+      .summary-table thead th {
+        background: rgba(15, 23, 42, 0.95);
+        font-size: 0.8rem;
+      }
+
+      .summary-table tbody td:first-child {
+        font-weight: 600;
+        text-align: left;
+      }
+
+      .summary-reward-cell {
+        color: #fbbf24;
+        font-weight: 600;
+      }
+
+      /* REWARDS TABLE */
+
+      .rewards-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+        font-size: 0.8rem;
+      }
+
+      .rewards-table th,
+      .rewards-table td {
+        border: 1px solid rgba(55, 65, 81, 0.7);
+        padding: 4px 6px;
+        text-align: left;
+      }
+
+      .rewards-table th {
+        background: rgba(15, 23, 42, 0.95);
+      }
+
+      .rewards-table td.points {
+        text-align: center;
+        color: #fbbf24;
+        font-weight: 600;
+      }
+
+      .rewards-heading {
+        margin-top: 28px;
+      }
+
+      /* FOOTER */
+
+      .footer {
+        max-width: 1140px;
+        margin: 0 auto 22px;
+        padding: 0 20px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .footer span.highlight {
+        color: var(--accent-strong);
+      }
+
+      @media (max-width: 900px) {
+        .top-bar {
+          padding-inline: 16px;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-inline-image {
+          justify-content: flex-start;
+        }
+
+        .program-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dashboard-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .program-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="top-bar">
+      <div class="logo">
+        <div class="logo-badge">FIT</div>
+        <span>AI COACH</span>
+      </div>
+      <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a onclick="focusProgramFromNav()">Explore Program</a>
+        <a href="{{ url_for('started_plans') }}">Started Plans</a>
+        {% if session.get('current_plan') %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    {% if page == 'index' %}
+    <!-- HOME PAGE -->
+    <main class="page">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-overlay">
+            <div class="hero-heading">
+              <div class="eyebrow">SMART FITNESS • DARK THEME</div>
+              <h1>WORKOUT WITH ME</h1>
+              <p>
+                Track BMI, protein, water, steps and sleep. Complete daily
+                challenges and ask our AI assistant whenever you need help.
+              </p>
+
+              <div class="hero-inline-image">
+                <img
+                  src="https://images.pexels.com/photos/2261482/pexels-photo-2261482.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Athlete working out"
+                />
+              </div>
+            </div>
+
+            <div class="hero-tags">
+              <div class="tag-pill">Beginner / Intermediate / Advanced</div>
+              <div class="tag-pill">Water • Steps • Sleep tracker</div>
+              <div class="tag-pill">AI Fitness Q&amp;A built-in</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right" id="start-plan">
+          <h2>Start Your Plan</h2>
+          <p>
+            Enter your Gmail, weight and height, choose your level and we’ll
+            calculate BMI, protein, water and daily steps for you.
+          </p>
+
+          <form class="start-form" method="POST" id="startForm">
+            <div class="form-row">
+              <label>Gmail / Email</label>
+              <input
+                type="email"
+                name="email"
+                id="emailInput"
+                placeholder="youremail@gmail.com"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label>Weight (kg)</label>
+              <input
+                type="number"
+                step="0.1"
+                name="weight"
+                id="weightInput"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label>Height (cm)</label>
+              <input
+                type="number"
+                step="0.1"
+                name="height"
+                id="heightInput"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label>Experience Level</label>
+              <div class="level-options">
+                <label class="level-pill">
+                  <input
+                    type="radio"
+                    name="level"
+                    value="beginner"
+                    required
+                  />Beginner
+                </label>
+                <label class="level-pill">
+                  <input type="radio" name="level" value="intermediate" />Inter
+                </label>
+                <label class="level-pill">
+                  <input type="radio" name="level" value="advanced" />Advanced
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" id="startButton" disabled>Start Plan</button>
+          </form>
+
+          {% if current_plan %}
+          <div class="current-plan-summary">
+            <div class="badge-small">Current Plan</div>
+            <p>
+              Email:
+              <strong>{{ current_plan.email }}</strong>
+            </p>
+            <p>
+              Level:
+              <strong>{{ current_plan.level.capitalize() }}</strong> |
+              BMI:
+              <strong>{{ current_plan.bmi }}</strong>
+              ({{ current_plan.bmi_category }})
+            </p>
+            <p>
+              Protein:
+              <strong>{{ current_plan.protein_target }} g</strong>
+              • Water:
+              <strong>{{ current_plan.water_target }} L</strong>
+              • Steps:
+              <strong>{{ current_plan.step_target }}</strong>
+            </p>
+            <p style="margin-top:6px;">
+              <a href="{{ url_for('dashboard') }}" class="badge-small"
+                >Open Dashboard</a
+              >
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- EXPLORE OUR PROGRAM -->
+      <section class="program-section" id="program-section">
+        <div class="program-row-title">
+          <div>
+            <span>WORKFLOW</span>
+            <h2>Explore Our Program</h2>
+          </div>
+          <span style="font-size:0.78rem;color:var(--text-muted);">
+            Click any step card to focus on that part of the process
+          </span>
+        </div>
+
+        <div class="program-grid">
+          <div class="program-card highlight program-active" data-target="start">
+            <div class="program-step">STEP 01</div>
+            <h3>Input Your Details</h3>
+            <p>
+              Add Gmail, body weight and height and select your level:
+              beginner, intermediate or advanced.
+            </p>
+            <span class="program-link">Go to Start Form ↗</span>
+          </div>
+
+          <div class="program-card" data-target="none">
+            <div class="program-step">STEP 02</div>
+            <h3>Get Smart Plan</h3>
+            <p>
+              We calculate BMI, daily protein target, water intake and step
+              goals automatically based on your level.
+            </p>
+          </div>
+
+          <div class="program-card" data-target="dashboard">
+            <div class="program-step">STEP 03</div>
+            <h3>Track with Calendar</h3>
+            <p>
+              Log water, steps, sleep, protein and completed challenges for any
+              day using the calendar in the dashboard.
+            </p>
+            <span class="program-link">Open Dashboard ↗</span>
+          </div>
+
+          <div class="program-card" data-target="dashboard">
+            <div class="program-step">STEP 04</div>
+            <h3>Ask AI &amp; Earn Rewards</h3>
+            <p>
+              Use the AI assistant to clarify doubts and complete challenges to
+              collect points and unlock badges.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // --- INDEX PAGE JS (start button & explore cards) ---
+
+      const weightInput = document.getElementById("weightInput");
+      const heightInput = document.getElementById("heightInput");
+      const emailInput = document.getElementById("emailInput");
+      const startButton = document.getElementById("startButton");
+
+      function validateInputs() {
+        if (!weightInput || !heightInput || !emailInput || !startButton) return;
+        const w = weightInput.value.trim();
+        const h = heightInput.value.trim();
+        const e = emailInput.value.trim();
+        startButton.disabled = !(w && h && e);
+      }
+
+      if (weightInput) {
+        weightInput.addEventListener("input", validateInputs);
+        heightInput.addEventListener("input", validateInputs);
+        emailInput.addEventListener("input", validateInputs);
+      }
+
+      function focusProgramFromNav() {
+        const section = document.getElementById("program-section");
+        if (!section) return;
+        section.scrollIntoView({ behavior: "smooth" });
+        section.classList.add("program-focus");
+        setTimeout(() => section.classList.remove("program-focus"), 1200);
+      }
+
+      function scrollToStart() {
+        const el = document.getElementById("start-plan");
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function goDashboard() {
+        window.location.href = "{{ url_for('dashboard') }}";
+      }
+
+      document.querySelectorAll(".program-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const section = document.getElementById("program-section");
+          if (section) {
+            section.classList.add("program-focus");
+            setTimeout(() => section.classList.remove("program-focus"), 900);
+          }
+
+          document.querySelectorAll(".program-card").forEach((c) => {
+            c.classList.remove("program-active");
+            c.classList.remove("highlight");
+          });
+
+          card.classList.add("program-active");
+          card.classList.add("highlight");
+
+          const target = card.getAttribute("data-target");
+          if (target === "start") {
+            scrollToStart();
+          } else if (target === "dashboard") {
+            goDashboard();
+          }
+        });
+      });
+    </script>
+
+    {% elif page == 'dashboard' %}
+    <!-- DASHBOARD PAGE -->
+    <main class="page">
+      <h1 class="section-title">Dashboard</h1>
+      <p class="section-sub">
+        {{ plan.email }} • Level:
+        <strong>{{ plan.level.capitalize() }}</strong> • BMI:
+        <strong>{{ plan.bmi }}</strong> ({{ plan.bmi_category }})
+      </p>
+
+      <div class="dashboard-layout">
+        <!-- LEFT COLUMN -->
+        <div class="dashboard-main">
+          <!-- Daily Targets -->
+          <div class="card">
+            <h2>Daily Targets</h2>
+            <ul class="plan-list">
+              <li>Protein: <strong>{{ plan.protein_target }} g</strong></li>
+              <li>Water: <strong>{{ plan.water_target }} L</strong></li>
+              <li>Steps: <strong>{{ plan.step_target }} steps</strong></li>
+            </ul>
+
+            <h3 class="rewards-heading">Rewards (per challenge)</h3>
+            <table class="rewards-table">
+              <thead>
+                <tr>
+                  <th>Challenge</th>
+                  <th>Points (per completion)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Drink at least 2.5L of water</td>
+                  <td class="points">10 pts</td>
+                </tr>
+                <tr>
+                  <td>Walk an extra 1,000 steps</td>
+                  <td class="points">10 pts</td>
+                </tr>
+                <tr>
+                  <td>Sleep at least 7 hours</td>
+                  <td class="points">10 pts</td>
+                </tr>
+                <tr>
+                  <td>Avoid sugary drinks today</td>
+                  <td class="points">10 pts</td>
+                </tr>
+                <tr>
+                  <td>Complete a 20-minute workout</td>
+                  <td class="points">10 pts</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="note" style="margin-top:6px;">
+              Each time you complete one of these and tick it in
+              <strong>Challenges Completed</strong>, you earn
+              <strong>10 reward points</strong>.
+            </p>
+          </div>
+
+          <!-- Log Day -->
+          <div class="card">
+            <h2>Log Day</h2>
+            <form method="POST" action="{{ url_for('log_daily') }}" class="log-form">
+              <div class="form-row">
+                <label>Date</label>
+                <input
+                  type="date"
+                  name="log_date"
+                  value="{{ date.today().strftime('%Y-%m-%d') if date else '' }}"
+                />
+              </div>
+
+              <div class="form-row">
+                <label>Water (L)</label>
+                <input type="number" step="0.1" name="water" />
+              </div>
+              <div class="form-row">
+                <label>Steps</label>
+                <input type="number" name="steps" />
+              </div>
+              <div class="form-row">
+                <label>Sleep (hours)</label>
+                <input type="number" step="0.1" name="sleep" />
+              </div>
+              <div class="form-row">
+                <label>Protein (g)</label>
+                <input type="number" step="0.1" name="protein" />
+              </div>
+
+              <div class="form-row">
+                <label>Challenges Completed</label>
+
+                <label
+                  style="font-size:0.82rem; font-weight:600; color:#93c5fd; cursor:pointer; display:block; margin-bottom:4px;"
+                >
+                  <input type="checkbox" id="selectAllChallenges" />
+                  Select All
+                </label>
+
+                <div class="challenge-checkboxes" id="challengeList">
+                  {% for ch in challenges %}
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="challenges"
+                      class="challenge-item"
+                      value="{{ ch }}"
+                    />
+                    {{ ch }}
+                  </label>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <button type="submit">Save Progress</button>
+            </form>
+          </div>
+
+          <!-- ✅ AI FITNESS ASSISTANT MOVED TO LEFT COLUMN -->
+          <div class="card ai-card">
+            <h2>AI Fitness Assistant</h2>
+            <div id="chatBox" class="chat-box">
+              <div class="message bot">
+                Hi! Ask me about your BMI, protein, water, steps, sleep, or meal
+                ideas.
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask something about your plan..."
+              />
+              <button id="chatSend">Send</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="dashboard-side">
+          <div class="card">
+            <h2>Progress Summary &amp; Rewards</h2>
+
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Today</th>
+                  <th>This Week</th>
+                  <th>This Month</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Water</td>
+                  <td>{{ today_stats.water }} L / {{ plan.water_target }} L</td>
+                  <td>{{ week_stats.water }} L</td>
+                  <td>{{ month_stats.water }} L</td>
+                </tr>
+                <tr>
+                  <td>Steps</td>
+                  <td>{{ today_stats.steps }} / {{ plan.step_target }}</td>
+                  <td>{{ week_stats.steps }}</td>
+                  <td>{{ month_stats.steps }}</td>
+                </tr>
+                <tr>
+                  <td>Sleep</td>
+                  <td>{{ today_stats.sleep }} hrs</td>
+                  <td>{{ week_stats.sleep }} hrs</td>
+                  <td>{{ month_stats.sleep }} hrs</td>
+                </tr>
+                <tr>
+                  <td>Protein</td>
+                  <td>
+                    {{ today_stats.protein }} g / {{ plan.protein_target }} g
+                  </td>
+                  <td>{{ week_stats.protein }} g</td>
+                  <td>{{ month_stats.protein }} g</td>
+                </tr>
+                <tr>
+                  <td>Challenges</td>
+                  <td>{{ today_stats.challenges }}</td>
+                  <td>{{ week_stats.challenges }}</td>
+                  <td>{{ month_stats.challenges }}</td>
+                </tr>
+                <tr>
+                  <td>Rewards</td>
+                  <td class="summary-reward-cell">
+                    {{ today_stats.challenges * 10 }} pts
+                  </td>
+                  <td class="summary-reward-cell">
+                    {{ week_stats.challenges * 10 }} pts
+                  </td>
+                  <td class="summary-reward-cell">
+                    {{ month_stats.challenges * 10 }} pts
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="note" style="margin-top:8px;">
+              Reward rule:
+              <strong>10 points</strong> for every completed challenge you tick
+              in the log. Daily, weekly and monthly rewards are calculated from
+              total challenges finished in that period.
+            </p>
+          </div>
+
+          <!-- ✅ DAILY GOALS & CHALLENGES MOVED TO RIGHT COLUMN -->
+          <div class="card">
+            <h2>Daily Goals &amp; Challenges</h2>
+            <ul style="font-size:0.85rem;">
+              {% for ch in challenges %}
+              <li>{{ ch }}</li>
+              {% endfor %}
+            </ul>
+            <p class="note" style="margin-top:8px;">
+              Tick completed challenges below to gain points.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // --- DASHBOARD JS (AI chat + select-all challenges) ---
+
+      const chatBox = document.getElementById("chatBox");
+      const chatInput = document.getElementById("chatInput");
+      const chatSend = document.getElementById("chatSend");
+
+      function addMessage(text, sender) {
+        if (!chatBox) return;
+        const div = document.createElement("div");
+        div.classList.add("message", sender);
+        div.textContent = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      async function sendMessage() {
+        const text = (chatInput && chatInput.value.trim()) || "";
+        if (!text) return;
+        addMessage(text, "user");
+        chatInput.value = "";
+
+        try {
+          const res = await fetch("{{ url_for('assistant') }}", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text }),
+          });
+          const data = await res.json();
+          addMessage(data.reply, "bot");
+        } catch (err) {
+          addMessage("Sorry, something went wrong.", "bot");
+        }
+      }
+
+      if (chatSend && chatInput) {
+        chatSend.addEventListener("click", sendMessage);
+        chatInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+      }
+
+      // Select All for challenges
+      const selectAll = document.getElementById("selectAllChallenges");
+      const challengeItems = document.querySelectorAll(".challenge-item");
+
+      if (selectAll && challengeItems.length > 0) {
+        selectAll.addEventListener("change", () => {
+          challengeItems.forEach((cb) => {
+            cb.checked = selectAll.checked;
+          });
+        });
+
+        challengeItems.forEach((cb) => {
+          cb.addEventListener("change", () => {
+            const allChecked = Array.from(challengeItems).every(
+              (item) => item.checked
+            );
+            const noneChecked = Array.from(challengeItems).every(
+              (item) => !item.checked
+            );
+            if (allChecked) {
+              selectAll.checked = true;
+              selectAll.indeterminate = false;
+            } else if (noneChecked) {
+              selectAll.checked = false;
+              selectAll.indeterminate = false;
+            } else {
+              selectAll.indeterminate = true;
+            }
+          });
+        });
+      }
+    </script>
+
+    {% elif page == 'started_plans' %}
+    <!-- STARTED PLANS PAGE -->
+    <main class="page">
+      <h1 class="section-title">Started Plans</h1>
+      <p class="section-sub">
+        All plans started in this browser session with Gmail &amp; body details.
+      </p>
+
+      {% if not plans %}
+      <p class="note">No plans started yet. Go to Home and create one.</p>
+      {% else %}
+      <table class="plans-table">
+        <thead>
+          <tr>
+            <th>Started At</th>
+            <th>Email (Gmail)</th>
+            <th>Level</th>
+            <th>Weight (kg)</th>
+            <th>Height (cm)</th>
+            <th>BMI</th>
+            <th>Protein (g)</th>
+            <th>Water (L)</th>
+            <th>Steps</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in plans %}
+          <tr>
+            <td>{{ p.started_at }}</td>
+            <td>{{ p.email }}</td>
+            <td>{{ p.level.capitalize() }}</td>
+            <td>{{ p.weight }}</td>
+            <td>{{ p.height_cm }}</td>
+            <td>{{ p.bmi }} ({{ p.bmi_category }})</td>
+            <td>{{ p.protein_target }}</td>
+            <td>{{ p.water_target }}</td>
+            <td>{{ p.step_target }}</td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('delete_plan', plan_index=loop.index0) }}"
+                style="margin:0;"
+              >
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </main>
+    {% endif %}
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>
+        © {{ date.today().year if date else '2025' }} AI Fitness Coach. All
+        rights reserved.
+      </div>
+      <div>
+        <span class="highlight">Rewards:</span> 10 points for every completed
+        challenge you log.
+      </div>
+    </footer>
+  </body>
+</html>
